@@ -1,0 +1,19 @@
+#left_div{
+    width : 50%;
+    height: 500px;
+    float: left;
+    color: darkblue;
+    background-color: black;
+}
+
+#right_div{
+    width: 50%;
+    height: 500px;
+    float: left;
+    color: crimson;
+    background-color: white;
+}
+
+#body{
+    margin: 0px;
+}

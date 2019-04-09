@@ -14,22 +14,43 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
+import time
 
 #nltk.download('stopwords')
 
 
+
+
 def loadData(product_id):
-    df = pd.read_csv("./static/Amazon_Unlocked_Mobile.csv")
-    dftest = pd.read_csv("./static/test_data.csv")
+
+    df = pd.read_csv('./static/train_data.csv')
     df.head()
-    df = df.iloc[:,:]
-    df=df[['Reviews','Rating']]
-    df=df.dropna()
+    df = df.iloc[0:50000,:]
+    df.shape
+
+    df = df[['Reviews', 'Rating']]
+    df.dropna()
     df.head()
 
-    df=df[df['Rating']!=3]
-    df=df.reset_index(drop=True)
+    df = df[df['Rating']!=3]
+    df = df.reset_index(drop=True)
     df.info()
+
+    df['sentiment']=np.where(df['Rating'] > 3, 1, 0)
+    df.head()
+
+    dftest = pd.read_csv('./static/test_data.csv')
+    dftest.head()
+    dftest = dftest.iloc[0:50000,:]
+    dftest.shape
+
+    dftest = dftest[['Reviews','Rating']]
+    dftest.dropna()
+    dftest.head()
+
+    dftest = dftest[dftest['Rating']!=3]
+    dftest = dftest.reset_index(drop=True)
+    dftest.info()
 
     if(product_id == 1):
         dftest = dftest.iloc[0:10000,:]
@@ -50,8 +71,10 @@ def loadData(product_id):
         dftest = dftest.iloc[40001:50000, :]
     
 
-    df['sentiment']=np.where(df['Rating'] > 3, 1, 0)
-    df.head()
+    
+    dftest['sentiment'] = np.where(dftest['Rating'] > 3, 1, 0)
+    dftest.head()
+
     #X_train, X_test, y_train, y_test = train_test_split(df['Reviews'], df['sentiment'], test_size=0.2, random_state=0)
 
     X_train = df['Reviews']
@@ -81,11 +104,34 @@ def loadData(product_id):
     X_train_cleaned = []
     X_test_cleaned = []
 
-    for d in X_train:
-        X_train_cleaned.append(cleanText(d))
-    
-    for d in X_test:
-        X_test_cleaned.append(cleanText(d))
+
+    train_start = time.time()
+    try:
+        for d in X_train:
+            if type(d) is str:
+                X_train_cleaned.append(cleanText(d))
+            else:
+                X_train_cleaned.append(cleanText(''))
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print 'In train at ' + d + message
+    train_end = time.time()
+    print 'Time taken to train: ', (train_end - train_start)
+
+    test_start = time.time()
+    try:
+        for d in X_test:
+            if type(d) is str:
+                X_test_cleaned.append(cleanText(d))
+            else:
+                X_test_cleaned.append(cleanText(''))
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print 'In test at ' + d + message
+    test_end = time.time()
+    print 'Time taken to test: ', str(test_end - test_start)
 
 
 
@@ -107,8 +153,29 @@ def loadData(product_id):
     predictions = mnb.predict(CVect.transform(X_test_cleaned))
     modelEvaluation(predictions)
 
+    pos_count = 0
+    neg_count = 0
+    for i in range(len(predictions)):
+        if(predictions[i] == 1):
+            pos_count = pos_count + 1
+        elif(predictions[i] == 0):
+            neg_count = neg_count + 1
 
-    tfidf = TfidfVectorizer(min_df=5)
+    print('Positive reviews: ', pos_count)
+    print('Negative reviews: ', neg_count)
+
+    pos_per = pos_count/float(pos_count+neg_count)
+    neg_per = neg_count/float(pos_count+neg_count)
+
+    print('Positive percent: ' + str(pos_per*100) + "%")
+    print('Negative percent: ' + str(neg_per*100) + "%")
+
+    return pos_per, neg_per
+    
+
+
+
+    '''tfidf = TfidfVectorizer(min_df=5)
     X_train_tfidf = tfidf.fit_transform(X_train)
 
 
@@ -120,3 +187,6 @@ def loadData(product_id):
 
     predictions = lr.predict(tfidf.transform(X_test_cleaned))
     modelEvaluation(predictions)
+
+    return pos_per*100, neg_per*100'''
+    

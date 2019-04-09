@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify
 from learn import loadData
-
+#from demolearn import loadData
 
 app = Flask(__name__)
 
@@ -22,13 +22,23 @@ reviews = [
 def main():
     return render_template('index.html')
 
+@app.route('/product')
+def product():
+    return render_template('product.html')
+
+@app.route('/review')
+def review():
+    return render_template('review.html')
+
+
 @app.route('/review-evaluation/<int:product_id>', methods=['GET'])
 def reviewEvaluation(product_id):
-    loadData(product_id)
-    return jsonify({'reviews': reviews})
+    pos, neg = loadData(product_id)
+    result = 'Positive Reviews: ' + str(pos) + '%\n' + 'Negative Reviews: ' + str(neg) + '%'
+    return render_template('product.html', positive=pos, negative=neg)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8000)
 
 
 

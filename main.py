@@ -38,7 +38,7 @@ def reviewEvaluation(product_id):
     return render_template('product.html', positive=pos, negative=neg)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(host='127.0.0.1', port=8080, debug=True)
 
 
 

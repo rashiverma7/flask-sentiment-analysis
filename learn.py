@@ -20,8 +20,9 @@ from sklearn.linear_model import LogisticRegression
 
 def loadData(product_id):
     df = pd.read_csv("./static/Amazon_Unlocked_Mobile.csv")
+    dftest = pd.read_csv("./static/test_data.csv")
     df.head()
-    df = df.iloc[0:50000,:]
+    df = df.iloc[:,:]
     df=df[['Reviews','Rating']]
     df=df.dropna()
     df.head()
@@ -30,11 +31,34 @@ def loadData(product_id):
     df=df.reset_index(drop=True)
     df.info()
 
+    if(product_id == 1):
+        dftest = dftest.iloc[0:10000,:]
+    
+
+    elif(product_id == 2):
+        dftest = dftest.iloc[10001:20000, :]
+    
+
+    elif(product_id == 3):
+        dftest = dftest.iloc[20001:30000, :]
+    
+
+    elif(product_id == 4):
+        dftest = dftest.iloc[30001:40000, :]
+
+    elif(product_id == 5):
+        dftest = dftest.iloc[40001:50000, :]
+    
+
     df['sentiment']=np.where(df['Rating'] > 3, 1, 0)
     df.head()
-    X_train, X_test, y_train, y_test = train_test_split(df['Reviews'], df['sentiment'], test_size=0.2, random_state=0)
+    #X_train, X_test, y_train, y_test = train_test_split(df['Reviews'], df['sentiment'], test_size=0.2, random_state=0)
 
+    X_train = df['Reviews']
+    y_train = df['sentiment']
 
+    X_test = dftest['Reviews']
+    y_test = dftest['sentiment']
 
     def cleanText(raw_text, remove_stopwords=True, stemming=True, split_text=False):
     

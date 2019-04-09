@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from flask import Flask, render_template, jsonify
 from learn import loadData
 #from demolearn import loadData

@@ -25,7 +25,7 @@ def loadData(product_id):
 
     df = pd.read_csv('./static/train_data.csv')
     df.head()
-    df = df.iloc[0:10000,:]
+    df = df.iloc[0:5000,:]
     df.shape
 
     df = df[['Reviews', 'Rating']]

@@ -26,7 +26,9 @@ def main():
 
 @app.route('/product')
 def product():
-    return render_template('product.html')
+    pos = 80
+    neg = 20
+    return render_template('product.html', positive=pos, negative=neg)
 
 @app.route('/review')
 def review():
@@ -40,7 +42,7 @@ def reviewEvaluation(product_id):
     return render_template('product.html', positive=pos, negative=neg)
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(debug=True)
 
 
 

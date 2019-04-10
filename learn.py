@@ -170,7 +170,7 @@ def loadData(product_id):
     print('Positive percent: ' + str(pos_per*100) + "%")
     print('Negative percent: ' + str(neg_per*100) + "%")
 
-    return pos_per, neg_per
+    return pos_per*100, neg_per*100
     
 
 

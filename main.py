@@ -26,9 +26,7 @@ def main():
 
 @app.route('/product')
 def product():
-    pos = 80
-    neg = 20
-    return render_template('product.html', positive=pos, negative=neg)
+    return render_template('product.html')
 
 @app.route('/review')
 def review():
@@ -39,7 +37,7 @@ def review():
 def reviewEvaluation(product_id):
     pos, neg = loadData(product_id)
     result = 'Positive Reviews: ' + str(pos) + '%\n' + 'Negative Reviews: ' + str(neg) + '%'
-    return render_template('product.html', positive=pos, negative=neg)
+    return render_template('analysis.html', positive=pos, negative=neg)
 
 if __name__ == '__main__':
     app.run(debug=True)

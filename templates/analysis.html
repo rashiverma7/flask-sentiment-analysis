@@ -15,7 +15,7 @@ and open the template in the editor.
     </head>
     <body style="text-align: center;">
       <div class="side-img" style="width:300px; height:500px;">
-        <img src="../static/images/side-img.png" alt="">
+        <img src="side-img.png" alt="">
       </div>
       <div id="product">
         <div class="products"><p>Select a product:<br></p>
@@ -45,7 +45,6 @@ and open the template in the editor.
         <!--<div id="graph">-->
         <script>
             let id;
-            document.getElementById('myChart').style.visibility = "hidden";
             var ctx = document.getElementById('myChart');
             var myChart = new Chart(ctx, {
             type: 'pie',
@@ -53,7 +52,7 @@ and open the template in the editor.
                 labels: ['Positive', 'Negative'],
                 datasets: [{
                         label: '# of Votes',
-                        data: [0,0],
+                        data: [{{positive}},{{negative}}],
                         backgroundColor: [
                         'rgba(255,165,0, 0.8)',
                         'rgba(0, 0, 0, 0.8)'
@@ -95,8 +94,8 @@ and open the template in the editor.
         }
 
         function showGraph(){
-
-            window.location.replace('http://0.0.0.0:5000/review-evaluation/'+id)
+            
+            window.open('http://0.0.0.0:5000/review-evaluation/'+id)
 
         }
 

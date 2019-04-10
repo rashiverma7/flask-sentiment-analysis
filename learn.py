@@ -135,7 +135,7 @@ def loadData(product_id):
 
 
 
-    CVect = CountVectorizer() 
+    CVect = CountVectorizer(stop_words=None) 
     X_train_countVect = CVect.fit_transform(X_train_cleaned)
 
 

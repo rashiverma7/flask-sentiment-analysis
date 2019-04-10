@@ -22,7 +22,7 @@ reviews = [
 
 @app.route('/')
 def main():
-    return render_template('index.html')
+    return render_template('main.html')
 
 @app.route('/product')
 def product():

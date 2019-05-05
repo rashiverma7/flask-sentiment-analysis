@@ -9,13 +9,13 @@ and open the template in the editor.
         <title>Evaluate a Product</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="products1.css"/>
+        <link rel="stylesheet" type="text/css" href="../static/products.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
     </head>
     <body style="text-align: center;">
       <div class="side-img" style="width:300px; height:500px;">
-        <img src="side-img.png" alt="">
+        <img src="../static/images/side-img.png" alt="">
       </div>
       <div id="product">
         <div class="products"><p>Select a product:<br></p>
@@ -26,11 +26,11 @@ and open the template in the editor.
               <option value="BlackBerry">BlackBerry Bold 9650 </option>
               <option value="Apple IPhone 6">Apple Iphone 6</option>
               <option value="Apple IPhone 5">Apple Iphone 5</option>
-              <option value="Samsung Duos II">Samsung S Duos II </option>
-              <option value="Xiomi 4A">Xiomi 4A </option>
+              <!-- <option value="Samsung Duos II">Samsung S Duos II </option>
+              <option value="Xiomi 4A">Xiaomi 4A </option>
               <option value="Samsung S5">Samsung S5</option>
               <option value="One plus two">One plus Two</option>
-              <option value="Samsung U340">Samsung U340</option>
+              <option value="Samsung U340">Samsung U340</option> -->
           </select>
           <button type="button" id="sub1" onclick="showGraph()">Analyse</button>
 
@@ -40,8 +40,10 @@ and open the template in the editor.
         <canvas id="myChart" width="100" height="100"></canvas>
         <!--<div id="graph">-->
         <script>
+
             let id;
             document.getElementById('myChart').style.visibility = "hidden";
+            
             var ctx = document.getElementById('myChart');
             var myChart = new Chart(ctx, {
             type: 'pie',

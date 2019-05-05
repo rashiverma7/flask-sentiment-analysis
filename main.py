@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from learn import loadData
 #from demolearn import loadData
 
@@ -30,7 +30,7 @@ def product():
 
 @app.route('/review')
 def review():
-    return render_template('review.html')
+    return render_template('product.html')
 
 
 @app.route('/review-evaluation/<int:product_id>', methods=['GET'])

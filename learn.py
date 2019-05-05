@@ -16,7 +16,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 import time
 
-nltk.download('stopwords')
+#nltk.download('stopwords')
 
 
 
@@ -145,10 +145,13 @@ def loadData(product_id):
 
 
     def modelEvaluation(predictions):
-        print ("\nAccuracy on validation set: {:.4f}".format(accuracy_score(y_test, predictions)))
+        print ("Accuracy on validation set: {:.4f}".format(accuracy_score(y_test, predictions)))
+        #print("Classification Report: {:.4f}".format(metrics.classification_report(y_test, predictions)) )
         #print("\nAUC score : {:.4f}".format(roc_auc_score(y_test, predictions)))
-        print("\nClassification report : \n", metrics.classification_report(y_test, predictions))
-        print("\nConfusion Matrix : \n", metrics.confusion_matrix(y_test, predictions))
+        print("Classification report : ") 
+        print(metrics.classification_report(y_test, predictions))
+        print("Confusion Matrix: ")
+        print(metrics.confusion_matrix(y_test, predictions))
 
     predictions = mnb.predict(CVect.transform(X_test_cleaned))
     modelEvaluation(predictions)

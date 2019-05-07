@@ -2,9 +2,7 @@ import re
 import nltk
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
 from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
 from nltk.stem import SnowballStemmer, WordNetLemmatizer
 from nltk import sent_tokenize, word_tokenize, pos_tag
 from sklearn.feature_extraction.text import CountVectorizer
@@ -16,23 +14,37 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 import time
 
-#nltk.download('stopwords')
+nltk.download('stopwords')
 
-def trainModel():
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+def loadData(product_id):
     df = pd.read_csv('./static/train_data.csv')
     df.head()
-    df = df.iloc[0:5000,:]
+    df = df.iloc[0:10000, :]
     df.shape
 
     df = df[['Reviews', 'Rating']]
     df.dropna()
     df.head()
 
-    df = df[df['Rating']!=3]
+    df = df[df['Rating'] != 3]
     df = df.reset_index(drop=True)
     df.info()
 
-    df['sentiment']=np.where(df['Rating'] > 3, 1, 0)
+    df['sentiment'] = np.where(df['Rating'] > 3, 1, 0)
     df.head()
 
     X_train = df['Reviews']
@@ -56,26 +68,6 @@ def trainModel():
 
         return( " ".join(words))
 
-    X_train_cleaned = []
-
-    train_start = time.time()
-    try:
-        for d in X_train:
-            if type(d) is str:
-                X_train_cleaned.append(cleanText(d))
-            else:
-                X_train_cleaned.append(cleanText(''))
-    except Exception as ex:
-        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-        message = template.format(type(ex).__name__, ex.args)
-        #print 'In train at ' + d + message
-    train_end = time.time()
-    print ('Time taken to train: ', (train_end - train_start))
-
-
-
-
-def loadData(product_id):
 
     dftest = pd.read_csv('./static/test_data.csv')
     dftest.head()
@@ -91,34 +83,30 @@ def loadData(product_id):
     dftest.info()
 
     if(product_id == 1):
-        dftest = dftest.iloc[0:10000,:]
+        dftest = dftest.iloc[0:20000,:]
 
 
     elif(product_id == 2):
-        dftest = dftest.iloc[10001:20000, :]
+        dftest = dftest.iloc[20001:40000, :]
 
 
     elif(product_id == 3):
-        dftest = dftest.iloc[20001:30000, :]
+        dftest = dftest.iloc[40001:60000, :]
 
 
     elif(product_id == 4):
-        dftest = dftest.iloc[30001:40000, :]
+        dftest = dftest.iloc[60001:80000, :]
 
     elif(product_id == 5):
-        dftest = dftest.iloc[40001:50000, :]
+        dftest = dftest.iloc[80001:100000, :]
 
 
 
     dftest['sentiment'] = np.where(dftest['Rating'] > 3, 1, 0)
     dftest.head()
-
-    #X_train, X_test, y_train, y_test = train_test_split(df['Reviews'], df['sentiment'], test_size=0.2, random_state=0)
-
-
-
     X_test = dftest['Reviews']
     y_test = dftest['sentiment']
+
 
     def cleanText(raw_text, remove_stopwords=True, stemming=True, split_text=False):
 
@@ -138,11 +126,22 @@ def loadData(product_id):
 
         return( " ".join(words))
 
-
+    X_train_cleaned = []
     X_test_cleaned = []
 
-
-
+    train_start = time.time()
+    try:
+        for d in X_train:
+            if type(d) is str:
+                X_train_cleaned.append(cleanText(d))
+            else:
+                X_train_cleaned.append(cleanText(''))
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        # print 'In train at ' + d + message
+    train_end = time.time()
+    print('Time taken to train: ', (train_end - train_start))
 
     test_start = time.time()
     try:
@@ -160,15 +159,6 @@ def loadData(product_id):
 
 
 
-    CVect = CountVectorizer(stop_words=None)
-    X_train_countVect = CVect.fit_transform(X_train_cleaned)
-
-
-    mnb = MultinomialNB()
-    mnb.fit(X_train_countVect, y_train)
-
-
-
     def modelEvaluation(predictions):
         print ("Accuracy on validation set: {:.4f}".format(accuracy_score(y_test, predictions)))
         #print("Classification Report: {:.4f}".format(metrics.classification_report(y_test, predictions)) )
@@ -177,6 +167,12 @@ def loadData(product_id):
         print(metrics.classification_report(y_test, predictions))
         print("Confusion Matrix: ")
         print(metrics.confusion_matrix(y_test, predictions))
+
+    mnb = MultinomialNB()
+    CVect = CountVectorizer(stop_words=None)
+    X_train_countVect = CVect.fit_transform(X_train_cleaned)
+    mnb.fit(X_train_countVect, y_train)
+
 
     predictions = mnb.predict(CVect.transform(X_test_cleaned))
     modelEvaluation(predictions)
@@ -199,6 +195,8 @@ def loadData(product_id):
     print('Negative percent: ' + str(neg_per*100) + "%")
 
     return pos_per*100, neg_per*100
+
+
 
 
 

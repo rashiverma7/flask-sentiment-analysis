@@ -1,7 +1,7 @@
     #!/usr/bin/env python
 
 from flask import Flask, render_template, jsonify, request
-from learn import loadData, trainModel
+from learn import loadData
 #from demolearn import loadData
 
 app = Flask(__name__)
@@ -9,7 +9,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    trainModel()
     return render_template('main.html')
 
 @app.route('/product')

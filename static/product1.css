@@ -10,6 +10,7 @@ body{
 }
 .products{
     font-size: 50px;
+    color:#ff9100;
 }
 .each-product{
     font-size: 15px;
@@ -21,7 +22,7 @@ body{
   	background-color: white;
   	border-radius: 5px;
 }
-/*#side-img{
+#side-img{
   width: 800px;
   height: 160px;
   float: left;
@@ -29,7 +30,7 @@ body{
 
   margin-top: 10px;
   border-radius: 11px;
-}*/
+}
 
 #belowImg{
    margin-left:40px;
@@ -51,7 +52,7 @@ body{
   height: 753px;
   border-style: solid;
   border-color: #ff9100;
-  margin-left: 40px;
+  margin-left: 580px;
   margin-top: 10px;
   font-size: 15px;
 }
@@ -133,7 +134,7 @@ body{
 
 #percentage{
   text-align: left;
-  padding-left: 0px;
+  padding-left: 10px;
   padding-top: 20px;
 }
 

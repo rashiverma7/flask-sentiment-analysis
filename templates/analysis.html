@@ -14,19 +14,44 @@ and open the template in the editor.
         <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
     </head>
     <body style="text-align: center;">
-      <div id="side-img">
-        <!--img src="../static/images/side-img.png" alt=""-->
-      </div>
+
       <div id="belowImg">
           <p id="prodName">Name of Product: Blackberry Q5</p>
           <p id="percentage">Percentage of Positive Reviews: {{positive}}</p>
           <p id="percentage">Percentage of Negative Reviews: {{negative}}</p>
-          <p id="rev">Positive Review: Awesome,<br> Crazy,Badass,<br> a must buy.</p>
-          <p id="rev">Negative Review: Piece of Shit,<br> felt Cheated.</p>
+          <p id="percentage">Classification report:</p>
+          <!--p id="percentage">Precision:</p>
+          <p id="percentage">Recall:</p>
+          <p id="percentage">f1-score:</p-->
+          <table>
+              <th>
+
+                  <td>Precision</td>
+                  <td>Recall</td>
+                  <td>F1-score</td>
+              </th>
+              <tr>
+                  <td>Positive</td>
+                  <td>0.84</td>
+                  <td>0.74</td>
+                  <td>0.79</td>
+              </tr>
+              <tr>
+                  <td>&nbspNegative</td>
+                  <td>0.94</td>
+                  <td>0.96</td>
+                  <td>0.94</td>
+              </tr>
+          </table>
+          <p id="percentage" style="color:#ff9100;">Model Accuracy: 91.80</p>
+          <p id="percentage">Positive reviews: 7980</p>
+          <p id="percentage">Negative reviews: 2096</p>
+          <!--p id="rev">Positive Review: Awesome,<br> Crazy,Badass,<br> a must buy.</p>
+          <p id="rev">Negative Review: Piece of Shit,<br> felt Cheated.</p-->
           <div id="buttons">
-            <a id="sub1a" href="C:\Users\hp\Desktop\project_final_may\flask-sentiment-analysis\templates\product_part2.html">Analyse More</a>
-            <a id="sub1b" href="C:\Users\hp\Desktop\project_final_may\flask-sentiment-analysis\templates\product_part3.html">Analyse More</a>
-            <a id="sub1c" href="C:\Users\hp\Desktop\project_final_may\flask-sentiment-analysis\templates\product_part4.html">Analyse More</a>
+            <a id="sub1a" href="C:\Users\hp\Desktop\flask-sentiment-analysis\templates\product_part2.html">Analyse More</a>
+            <a id="sub1b" href="C:\Users\hp\Desktop\flask-sentiment-analysis\templates\product_part3.html">Analyse More</a>
+            <a id="sub1c" href="C:\Users\hp\Desktop\flask-sentiment-analysis\templates\product_part4.html">Analyse More</a>
           </div>
       </div>
       <div id="product">
@@ -48,8 +73,8 @@ and open the template in the editor.
 
 
         </div>
-        <div class="chart-container" style="position: absolute; height:10vh; width:20vw; padding-left: 150px; padding-top: 50px;">
-        <canvas id="myChart" width="100" height="100"></canvas>
+        <div class="chart-container" style="position: absolute; height:10vh; width:20vw; padding-left:210px; margin-top:-90px; ">
+        <canvas id="myChart" width="80" height="80"></canvas>
         <!--<div id="graph">-->
         <script>
             let id;

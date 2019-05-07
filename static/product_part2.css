@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Oxygen');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Noto+Sans+SC|Oxygen');
+
+
+body{
+ background-repeat: no-repeat;background-position: center;background-size: cover;height: 100%;
+ font-family: 'Josefin Sans', sans-serif;
+ display: inline-flex;
+ float: left;
+}
+
+#gblock1{
+  height: 700px;
+  border-style: solid;
+  border-color: #ff9100;
+  float: left;
+  width: 500px;
+  margin-top: 10px;
+  margin-left: 580px;
+  border-radius: 11px;
+  display: table-cell;
+  position: fixed;
+}
+
+
+
+#hidDiv{
+  /*display: none;*/
+  display: table;
+}
+#sub1{
+  height: 40px;
+  width: 200px;
+  border-color: #ff9100;
+  border-radius: 10px;
+  background-color: White;
+  border-style: solid;
+  color: #ff9100;
+  font-size: 20px;
+  border-radius: 11px;
+  margin: 50px 50px 150px 145px;
+
+}

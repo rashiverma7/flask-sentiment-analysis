@@ -16,32 +16,48 @@ body{
     height: 50px;
     width: 600px;
     border-color: #ff9100;
-    border-width: 2px;
+    border-width: 1px;
     cursor: pointer;
   	background-color: white;
   	border-radius: 5px;
 }
-.side-img{
-  width: 255px;
-  height: 550px;
+#side-img{
+  width: 800px;
+  height: 160px;
+  float: left;
+  margin-left: 20px;
+
+  margin-top: 10px;
+  border-radius: 11px;
+}
+
+#belowImg{
+  font-size: 20px;
+  width: 800px;
+  height: 553px;
   float: left;
   margin-right: -300px;
-  margin-left: 10px;
+  margin-top: 200px;
+  margin-left: -780px !important ;
+  border-style: solid;
+  border-color: #ff9100;
+  border-radius: 11px;
+
 }
 
 #product{
   border-radius: 11px;
-  width: 650px;
+  width: 750px;
   color:#ff9100;
-  height: 750px;
+  height: 720px;
   border-style: solid;
   border-color: #ff9100;
-  margin-left: 800px;
-  margin-top: 10px;
+  margin-left: 340px;
+  margin-top: ```110px;
   font-size: 15px;
 }
 
-#sub1{
+#sub1c{
   height: 40px;
   width: 200px;
   border-color: #ff9100;
@@ -50,4 +66,95 @@ body{
   border-style: solid;
   color: #ff9100;
   font-size: 20px;
+  border-radius: 11px;
+  margin-left: 20px;
+  padding-top: 20px;
+  text-decoration: none;
+  margin-top: 30px;
+}
+
+#sub1a{
+  height: 40px;
+  width: 200px;
+  border-color: #ff9100;
+  border-radius: 10px;
+  background-color: White;
+  border-style: solid;
+  color: #ff9100;
+  font-size: 20px;
+  border-radius: 11px;
+  margin-left: 20px;
+  padding-top: 20px;
+  text-decoration: none;
+  margin-top: 30px;
+}
+
+#sub1b{
+  height: 40px;
+  width: 200px;
+  border-color: #ff9100;
+  border-radius: 10px;
+  background-color: White;
+  border-style: solid;
+  color: #ff9100;
+  font-size: 20px;
+  border-radius: 11px;
+  margin-left: 20px;
+  padding-top: 20px;
+  text-decoration: none;
+  margin-top: 30px;
+}
+
+#buttons{
+  display: inline-flex;
+  text-decoration: none;
+}
+
+#sub2{
+  height: 40px;
+  width: 200px;
+  border-color: #ff9100;
+  border-radius: 10px;
+  background-color: White;
+  border-style: solid;
+  color: #ff9100;
+  font-size: 20px;
+  border-radius: 11px;
+  margin: 50px 50px 150px 145px;
+
+}
+
+
+
+
+#prodName{
+  font-size: 32px;
+  color: #ff9100;
+  text-align: left;
+  padding-left: 10px;
+}
+
+#percentage{
+  text-align: left;
+  padding-left: 10px;
+  padding-top: 20px;
+}
+
+#rev{
+  text-align: left;
+  padding-left: 10px;
+  padding-top: 20px;
+}
+
+.but{
+  height: 40px;
+  width: 200px;
+  border-color: #ff9100;
+  border-radius: 10px;
+  background-color: White;
+  border-style: solid;
+  color: #ff9100;
+  font-size: 20px;
+  border-radius: 11px;
+  margin-bottom: 10px;
 }

@@ -3,7 +3,7 @@ import nltk
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from nltk.corpus import stopwords 
+from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from nltk.stem import SnowballStemmer, WordNetLemmatizer
 from nltk import sent_tokenize, word_tokenize, pos_tag
@@ -18,11 +18,7 @@ import time
 
 #nltk.download('stopwords')
 
-
-
-
-def loadData(product_id):
-
+def trainModel():
     df = pd.read_csv('./static/train_data.csv')
     df.head()
     df = df.iloc[0:5000,:]
@@ -39,9 +35,51 @@ def loadData(product_id):
     df['sentiment']=np.where(df['Rating'] > 3, 1, 0)
     df.head()
 
+    X_train = df['Reviews']
+    y_train = df['sentiment']
+
+    def cleanText(raw_text, remove_stopwords=True, stemming=True, split_text=False):
+
+        letters_only = re.sub("[^a-zA-Z]", " ", raw_text)
+        words = letters_only.lower().split()
+
+        if remove_stopwords:
+            stops = set(stopwords.words("english"))
+            words = [w for w in words if not w in stops]
+
+        if stemming==True:
+            stemmer = SnowballStemmer('english')
+            words = [stemmer.stem(w) for w in words]
+
+        if split_text==True:
+            return (words)
+
+        return( " ".join(words))
+
+    X_train_cleaned = []
+
+    train_start = time.time()
+    try:
+        for d in X_train:
+            if type(d) is str:
+                X_train_cleaned.append(cleanText(d))
+            else:
+                X_train_cleaned.append(cleanText(''))
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        #print 'In train at ' + d + message
+    train_end = time.time()
+    print ('Time taken to train: ', (train_end - train_start))
+
+
+
+
+def loadData(product_id):
+
     dftest = pd.read_csv('./static/test_data.csv')
     dftest.head()
-    dftest = dftest.iloc[0:50000,:]
+    dftest = dftest.iloc[0:100000,:]
     dftest.shape
 
     dftest = dftest[['Reviews','Rating']]
@@ -54,70 +92,57 @@ def loadData(product_id):
 
     if(product_id == 1):
         dftest = dftest.iloc[0:10000,:]
-    
+
 
     elif(product_id == 2):
         dftest = dftest.iloc[10001:20000, :]
-    
+
 
     elif(product_id == 3):
         dftest = dftest.iloc[20001:30000, :]
-    
+
 
     elif(product_id == 4):
         dftest = dftest.iloc[30001:40000, :]
 
     elif(product_id == 5):
         dftest = dftest.iloc[40001:50000, :]
-    
 
-    
+
+
     dftest['sentiment'] = np.where(dftest['Rating'] > 3, 1, 0)
     dftest.head()
 
     #X_train, X_test, y_train, y_test = train_test_split(df['Reviews'], df['sentiment'], test_size=0.2, random_state=0)
 
-    X_train = df['Reviews']
-    y_train = df['sentiment']
+
 
     X_test = dftest['Reviews']
     y_test = dftest['sentiment']
 
     def cleanText(raw_text, remove_stopwords=True, stemming=True, split_text=False):
-    
-        letters_only = re.sub("[^a-zA-Z]", " ", raw_text)  
-        words = letters_only.lower().split()  
-    
-        if remove_stopwords: 
+
+        letters_only = re.sub("[^a-zA-Z]", " ", raw_text)
+        words = letters_only.lower().split()
+
+        if remove_stopwords:
             stops = set(stopwords.words("english"))
             words = [w for w in words if not w in stops]
-        
-        if stemming==True: 
-            stemmer = SnowballStemmer('english') 
+
+        if stemming==True:
+            stemmer = SnowballStemmer('english')
             words = [stemmer.stem(w) for w in words]
-        
-        if split_text==True: 
+
+        if split_text==True:
             return (words)
-    
+
         return( " ".join(words))
 
-    X_train_cleaned = []
+
     X_test_cleaned = []
 
 
-    train_start = time.time()
-    try:
-        for d in X_train:
-            if type(d) is str:
-                X_train_cleaned.append(cleanText(d))
-            else:
-                X_train_cleaned.append(cleanText(''))
-    except Exception as ex:
-        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-        message = template.format(type(ex).__name__, ex.args)
-        print 'In train at ' + d + message
-    train_end = time.time()
-    print 'Time taken to train: ', (train_end - train_start)
+
 
     test_start = time.time()
     try:
@@ -129,13 +154,13 @@ def loadData(product_id):
     except Exception as ex:
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
-        print 'In test at ' + d + message
+        #print 'In test at ' + d + message
     test_end = time.time()
-    print 'Time taken to test: ', str(test_end - test_start)
+    print ('Time taken to test: ', str(test_end - test_start))
 
 
 
-    CVect = CountVectorizer(stop_words=None) 
+    CVect = CountVectorizer(stop_words=None)
     X_train_countVect = CVect.fit_transform(X_train_cleaned)
 
 
@@ -148,7 +173,7 @@ def loadData(product_id):
         print ("Accuracy on validation set: {:.4f}".format(accuracy_score(y_test, predictions)))
         #print("Classification Report: {:.4f}".format(metrics.classification_report(y_test, predictions)) )
         #print("\nAUC score : {:.4f}".format(roc_auc_score(y_test, predictions)))
-        print("Classification report : ") 
+        print("Classification report : ")
         print(metrics.classification_report(y_test, predictions))
         print("Confusion Matrix: ")
         print(metrics.confusion_matrix(y_test, predictions))
@@ -174,7 +199,7 @@ def loadData(product_id):
     print('Negative percent: ' + str(neg_per*100) + "%")
 
     return pos_per*100, neg_per*100
-    
+
 
 
 
@@ -185,11 +210,10 @@ def loadData(product_id):
     lr = LogisticRegression()
     lr.fit(X_train_tfidf, y_train)
 
-    print("Number of features : %d \n" %len(tfidf.get_feature_names())) 
+    print("Number of features : %d \n" %len(tfidf.get_feature_names()))
     print("Show some feature names : \n", tfidf.get_feature_names()[::1000])
 
     predictions = lr.predict(tfidf.transform(X_test_cleaned))
     modelEvaluation(predictions)
 
     return pos_per*100, neg_per*100'''
-    
